@@ -1,66 +1,45 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import GitHubCorner from '../../components/GithubCorner';
 import ProgressBar from '../../components/ProgressBar';
 
+import * as CharactersActions from '../../store/ducks/characters/actions';
+
 import api from '../../services/api';
+import { Characters, CharactersResponse, CharactersState } from '../../store/ducks/characters/types';
 import './styles.css';
 
-//Necessário tipar 
-// colocar um loading
-// tirar input de component à parte
-
-interface IData {
-  results: IResults[];
-}
-
-interface IResults {
-  id: string;
-  name: string;
-  powerstats: {
-    intelligence: string;
-    strength: string;
-    speed: string;
-    durability: string;
-    power: string;
-    combat: string;
-  },
-  biography: {
-    ["full-name"]: string;
-    publisher: string;
-    alignment: string;
-  },
-  appearance: {
-    gender: string;
-    race: string;
-  },
-  image: {
-    url: string;
-  }
-}
 
 const Home = () => {
-  const [data, setData] = useState<IData>();
+  // const [data, setData] = useState<CharactersResponse>();
   const [value, setValue] = useState('');
+
+  const dispatch = useDispatch();
+
+  const characters = useSelector((state: CharactersState) => state.data);
 
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     setValue(e.target.value);
+    console.log(value)
   }
 
-  async function fetchAPI() {
-    api.get(`/search/${value}`)
-      .then(response => setData(response.data))
-  }
+  // async function fetchAPI() {
+  //   api.get(`/search/${value}`)
+  //     .then(response => setData(response.data))
+  // }
+
+  // function handleSubmit() {
+  //   try {
+  //     fetchAPI()
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   function handleSubmit() {
-    try {
-      fetchAPI()
-    } catch (error) {
-      console.log(error)
-    }
+    dispatch(CharactersActions.loadCharactersRequest())
   }
-
-  console.log(data?.results)
 
   return (
     <div className="App">
@@ -78,11 +57,12 @@ const Home = () => {
         <button type="button" onClick={handleSubmit}>Search</button>
       </div>
 
-      { data?.results !== undefined && (
+      { characters !== undefined && (
         <div className="container">
           <ul className="characters-list">
-            {data.results.map((character: IResults) => (
+            {characters?.results.map((character: Characters) => (
               <li key={character.id}>
+                {console.log('nome', character.name)}
                 <div className="character-card">
                   <div id="card-content">
                     <h2>{character.name}</h2>
@@ -104,7 +84,6 @@ const Home = () => {
                       <p>Power: </p> <ProgressBar value={parseInt(character.powerstats.power)} />
                       <p>Speed: </p> <ProgressBar value={parseInt(character.powerstats.speed)} />
                       <p>Strength: </p> <ProgressBar value={parseInt(character.powerstats.strength)} />
-
                     </div>
                   </div>
                 </div>

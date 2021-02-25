@@ -1,8 +1,8 @@
 import api from './api';
 
 const CharactersService = {
-  getCharacters: (value: string) => api.get('/search', { params: value })
+  getCharacters: () => api.get('/search/marvel')
 }
 
-export default CharactersService;
+export default CharactersService
 
