@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import GitHubCorner from '../../components/GithubCorner';
@@ -6,39 +6,19 @@ import ProgressBar from '../../components/ProgressBar';
 
 import * as CharactersActions from '../../store/ducks/characters/actions';
 
-import api from '../../services/api';
 import { Characters, CharactersResponse, CharactersState } from '../../store/ducks/characters/types';
 import './styles.css';
 
 
 const Home = () => {
-  // const [data, setData] = useState<CharactersResponse>();
-  const [value, setValue] = useState('');
-
   const dispatch = useDispatch();
 
-  const characters = useSelector((state: CharactersState) => state.data);
+  const { loadingCharacters, data } = useSelector((state: any) => state.character);
 
-  function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setValue(e.target.value);
-    console.log(value)
-  }
+  const inputValue = useRef<HTMLInputElement>(null);
 
-  // async function fetchAPI() {
-  //   api.get(`/search/${value}`)
-  //     .then(response => setData(response.data))
-  // }
-
-  // function handleSubmit() {
-  //   try {
-  //     fetchAPI()
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-  function handleSubmit() {
-    dispatch(CharactersActions.loadCharactersRequest())
+  const handleSubmit = () => {
+    dispatch(CharactersActions.loadCharactersRequest(inputValue?.current?.value))
   }
 
   return (
@@ -48,7 +28,7 @@ const Home = () => {
       <div className="main-container">
         <div className="input-container">
           <div className="input-field">
-            <input type="search" placeholder="Type here" value={value} onChange={handleOnChange} />
+            <input type="search" placeholder="Type here" ref={inputValue} />
             <div className="underline"></div>
           </div>
         </div>
@@ -57,10 +37,10 @@ const Home = () => {
         <button type="button" onClick={handleSubmit}>Search</button>
       </div>
 
-      { characters !== undefined && (
+      { data.results !== null && (
         <div className="container">
           <ul className="characters-list">
-            {characters?.results.map((character: Characters) => (
+            {data.results.map((character: Characters) => (
               <li key={character.id}>
                 {console.log('nome', character.name)}
                 <div className="character-card">

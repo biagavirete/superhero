@@ -1,7 +1,7 @@
 import { Reducer } from "redux";
 import { CharactersState, CharactersTypes } from './types';
 
-const INITIAL_STATE: CharactersState = {
+const INITIAL_STATE: any = {
   data: {
     results: []
   },
@@ -11,7 +11,7 @@ const INITIAL_STATE: CharactersState = {
 const reducer: Reducer<CharactersState> = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CharactersTypes.GET_CHARACTERS_REQUEST:
-      return { ...state, loadingQuestions: true }
+      return { ...state, loadingCharacters: true }
     case CharactersTypes.GET_CHARACTERS_SUCCESS:
       return {
         ...state,
@@ -19,7 +19,7 @@ const reducer: Reducer<CharactersState> = (state = INITIAL_STATE, action) => {
         data: action.payload.data
       }
     case CharactersTypes.GET_CHARACTERS_FAILURE:
-      return { ...state, loadingQuestions: false }
+      return { ...state, loadingCharacters: false }
     default:
       return state
   }
