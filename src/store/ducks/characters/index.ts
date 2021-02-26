@@ -17,7 +17,7 @@ const reducer: Reducer<CharactersState> = (state = INITIAL_STATE, action) => {
     case CharactersTypes.GET_CHARACTERS_SUCCESS:
       return {
         ...state,
-        loadingQuestions: false,
+        loadingCharacters: false,
         data: action.payload.data
       }
     case CharactersTypes.GET_CHARACTERS_FAILURE:
