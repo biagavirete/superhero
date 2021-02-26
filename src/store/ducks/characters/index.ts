@@ -1,11 +1,13 @@
 import { Reducer } from "redux";
 import { CharactersState, CharactersTypes } from './types';
 
-const INITIAL_STATE: any = {
+const INITIAL_STATE: CharactersState = {
   data: {
-    results: []
+    results: [],
+    response: '',
+    error: '',
   },
-  loadingCharacters: false
+  loadingCharacters: false,
 }
 
 const reducer: Reducer<CharactersState> = (state = INITIAL_STATE, action) => {

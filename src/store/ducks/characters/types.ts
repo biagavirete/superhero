@@ -6,6 +6,8 @@ export enum CharactersTypes {
 
 export interface CharactersResponse {
   results: Characters[];
+  response: string;
+  error: string;
 }
 
 export interface Characters {
