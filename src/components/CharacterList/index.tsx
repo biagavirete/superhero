@@ -1,15 +1,21 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Characters } from '../../store/ducks/characters/types';
+import toast, { Toaster } from 'react-hot-toast';
+
 import GitHubCorner from '../GithubCorner';
 import CustomizedProgressBars from '../ProgressBar';
 
 const CharacterList = () => {
-  const { data } = useSelector((state: any) => state.character);
+  const { data, loadingCharacters } = useSelector((state: any) => state.character);
+
+  if (loadingCharacters === false && data.response === 'error') {
+    toast.error('Character not found!')
+  }
 
   return (
     <>
-      { data.results !== null && (
+      { data.response !== 'success' ? <Toaster /> : data.results !== null && (
         <div className="container">
           <ul className="characters-list">
             {data.results.map((character: Characters) => (
