@@ -3,6 +3,9 @@ import { useDispatch } from 'react-redux';
 
 import * as CharactersActions from '../../store/ducks/characters/actions';
 
+import { Button } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+
 const SearchInput = () => {
   const dispatch = useDispatch();
 
@@ -23,7 +26,14 @@ const SearchInput = () => {
         </div>
       </div>
       <div className="button-container">
-        <button type="button" onClick={handleSubmit}>Search</button>
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          endIcon={<SearchIcon />}
+          onClick={handleSubmit}>
+          Search
+    </Button>
       </div>
     </>
   );
