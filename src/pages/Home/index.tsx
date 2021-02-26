@@ -1,13 +1,9 @@
 import React from 'react';
 import CharacterList from '../../components/CharacterList';
-
 import GitHubCorner from '../../components/GithubCorner';
-
 import SearchInput from '../../components/SearchInput';
 
-
 import './styles.css';
-
 
 const Home = () => {
 
