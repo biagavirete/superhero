@@ -1,6 +1,6 @@
 # Projeto Superhero API
 
-Projeto React utilizando Typescript, Redux, Redux-Saga e Material-UI desenvolvido na trilha React do Campinas Tech Talents, realizando busca de informações sobre herois pelo nome, coletando dados de uma <a href="https://www.superheroapi.com/">API pública</a>.
+Projeto React utilizando Typescript, Redux, Redux-Saga e Material-UI desenvolvido na trilha React do Campinas Tech Talents, realizando busca de informações sobre super-heróis pelo nome, coletando dados de uma <a href="https://www.superheroapi.com/">API pública</a>.
 
 ## Como usar
 
